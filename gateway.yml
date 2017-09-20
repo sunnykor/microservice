@@ -1,6 +1,5 @@
 spring:
-  profiles:
-    active: local  
+  profiles: local  
   application:
     name: defaultGateway
     
@@ -34,9 +33,6 @@ logging:
   level:
     ROOT: INFO
     org.springframework.web: DEBUG
-
-spring:
-  profiles: local
 
 info:
   description: Gateway
