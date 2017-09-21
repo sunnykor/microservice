@@ -1,8 +1,8 @@
 spring:
-  profiles: common  
+  profiles: 
   active: local
   application:
-    name: defaultGateway
+    name: commonGwConf
 
 eureka:
   instance:
