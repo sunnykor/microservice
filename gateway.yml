@@ -2,10 +2,6 @@ spring:
   profiles:
   active: local
 
-info:
-  description:
-  url:
-
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 1
