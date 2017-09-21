@@ -1,4 +1,4 @@
 spring:
   profiles: local  
   application:
-    name: gateway
+    name: defaultGateway
