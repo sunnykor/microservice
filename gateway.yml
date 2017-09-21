@@ -1,3 +1,7 @@
+info:
+  description:
+  url:
+
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 1
