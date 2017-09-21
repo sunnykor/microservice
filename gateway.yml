@@ -1,39 +1,4 @@
 spring:
   profiles: local  
   application:
-    name: defaultGateway
-    
-eureka:  
-  instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
-#    healthcheck:
-#      enabled: true
-#    lease:
-#       duration: 5
-
-zuul:
-  routes:
-    school:
-#      path: /school/**
-      serviceId: school-service
-
-endpoints:
-  restart: 
-    enabled: true 
-  shutdown: 
-    enabled: true 
-  health:
-    enabled: false
-
-logging:
-  level:
-    ROOT: INFO
-    org.springframework.web: DEBUG
-
-info:
-  description: Gateway
-  url: http://localhost:1001
+    name: gateway
