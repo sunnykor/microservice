@@ -1,2 +1,2 @@
-# microservice
-MSA
+MSA 구현을 위한 미디어로그 공유 저장소
+
