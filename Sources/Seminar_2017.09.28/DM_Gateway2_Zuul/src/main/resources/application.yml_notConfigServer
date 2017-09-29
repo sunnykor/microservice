@@ -1,0 +1,102 @@
+#########################################################
+##### Setting Commons from here #####
+#########################################################
+spring:
+  profiles:
+    active: local
+  application:
+    name: defaultGateway
+
+server:
+  port: 10002
+
+zuul:
+  routes:
+    greetingSvc:
+      serviceId: greetingSvc-redundancy
+    calendarSvc:
+      serviceId: calendarSvc-redundancy
+
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+
+logging: 
+  level: 
+    ROOT: INFO 
+    org.springframework.web: DEBUG
+---
+
+#########################################################
+##### Setting Production from here #####
+#########################################################
+spring:
+  profiles: prod
+
+info:
+  description: Gateway
+  url: http://172.26.132.21:10002
+
+greetingSvc-redundancy:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: 10.0.2.101:8091,10.0.2.101:8092
+
+calendarSvc-redundancy:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: 10.0.2.102:8191
+---
+
+#########################################################
+##### Setting Local from here #####
+#########################################################
+spring:
+  profiles: local
+  
+info:
+  description: Gateway
+  url: http://localhost:10002
+
+greetingSvc-redundancy:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: localhost:8091,localhost:8092
+
+calendarSvc-redundancy:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: localhost:8191
+---

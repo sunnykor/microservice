@@ -1,0 +1,61 @@
+#########################################################
+##### Setting Commons from here #####
+#########################################################
+spring:
+  profiles:
+    active: prod
+  application:
+    name: loadBalancer
+
+server:
+  port: 80
+---
+
+#########################################################
+##### Setting Production from here #####
+#########################################################
+#spring:
+#  profiles: prod
+
+info:
+  description: This is a LoadBalancer.
+  url: http://10.0.2.103:80
+  routingUrl: http://userWeb
+
+userWeb:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: 172.26.132.21:9091,172.26.132.21:9092
+#미디어로그    listOfServers: 172.19.246.209:9091,172.19.246.209:9092
+---
+
+#########################################################
+##### Setting Local from here #####
+#########################################################
+spring:
+  profiles: local
+
+info:
+  description: This is a LoadBalancer.
+  url: http://localhost:80
+  routingUrl: http://userWeb
+
+userWeb:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: localhost:9091,localhost:9092
+---

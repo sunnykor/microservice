@@ -1,0 +1,56 @@
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+  beans: 
+     sensitive: false
+management:
+  security:
+    enabled: false
+---
+gateway:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: ${server.hostname}:10001,${server.hostname}:10002
+
+hystrix:
+  command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      uri: http://${server.hostname}:8888
+
+server:
+  hostname: localhost
+
+info:
+  description: This service is a user's web.
+  url: http://${server.hostname}:${server.port}
+  routingUrl: http://gateway
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      uri: http://${server.hostname}:8888
+
+server:
+  hostname: 172.26.132.21
+
+info:
+  description: This is a User Service.
+  url: http://${server.hostname}:${server.port}
+  routingUrl: http://gateway
+---

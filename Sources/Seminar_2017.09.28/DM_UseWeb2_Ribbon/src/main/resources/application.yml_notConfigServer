@@ -1,0 +1,51 @@
+#########################################################
+##### Setting Commons from here #####
+#########################################################
+spring:
+  profiles:
+    active: local
+  application:
+    name: userService
+
+server:
+  port: 9092
+
+defaultGateway:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: localhost:10001,localhost:10002
+
+hystrix:
+  command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+---
+
+#########################################################
+##### Setting Production from here #####
+#########################################################
+spring:
+  profiles: prod
+
+info:
+  description: This is a User Service.
+  url: http://172.26.132.21:9092
+  routingUrl: http://defaultGateway
+---
+
+#########################################################
+##### Setting Local from here #####
+#########################################################
+spring:
+  profiles: local
+
+info:
+  description: This is a User Service.
+  url: http://localhost:9092
+  routingUrl: http://defaultGateway
+---

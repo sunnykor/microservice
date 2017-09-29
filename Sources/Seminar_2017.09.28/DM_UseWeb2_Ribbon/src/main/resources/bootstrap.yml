@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: local
+#  application:
+#    name: userWeb-dm
+  cloud:
+    config:
+      failFast: true  
+      uri: http://192.168.56.1:8888
+      name: userWeb-dm

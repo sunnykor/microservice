@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: prod
+#  application:
+#    name: gateway02-dm
+  cloud:
+    config:
+      uri: http://192.168.56.1:8888
+      name: gateway02-dm

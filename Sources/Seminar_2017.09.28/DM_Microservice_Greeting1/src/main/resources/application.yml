@@ -1,0 +1,34 @@
+#########################################################
+##### Setting Commons from here #####
+#########################################################
+spring:
+  profiles:
+    active: prod
+  application:
+    name: greeting_service
+
+server:
+  port: 8091
+---
+
+#########################################################
+##### Setting Production from here #####
+#########################################################
+spring:
+  profiles: prod
+
+info:
+  description: Hello Greeting-Service!
+  url: http://10.0.2.101:8091
+---
+
+#########################################################
+##### Setting Local from here #####
+#########################################################
+spring:
+  profiles: local
+
+info:
+  description: Hello Greeting-Service!
+  url: http://localhost:8091
+---

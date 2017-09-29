@@ -1,0 +1,36 @@
+package com.example.demo;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CalendarService {
+	
+	@Value("${info.url}") private String url;
+	private StringBuilder sb = new StringBuilder();
+	
+	public String getToday(){
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		this.sb.setLength(0);
+		this.sb.append("지금은 ").append(formatter.format(cal.getTime())).append(" 입니다. - ");
+		this.sb.append("<font color='red'>").append(this.url).append("</font>");
+		
+		return this.sb.toString();
+	}
+	
+	public String getPattern1(HttpServletRequest request){
+		this.sb.setLength(0);
+		this.sb.append("---> ").append(request.getRequestURI()).append("<br />");
+		this.sb.append("An API that you requested doesn't exist.");
+		
+		return this.sb.toString();
+	}
+
+}

@@ -1,0 +1,104 @@
+---
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+  beans: 
+     sensitive: false
+management:
+  security:
+    enabled: false
+logging: 
+  level: 
+    ROOT: INFO 
+    org.springframework.web: DEBUG
+zuul:
+  routes:
+    greetingSvc:
+      serviceId: greetingSvc
+    calendarSvc:
+      serviceId: calendarSvc
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 60000
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      uri: http://${server.hostname}:8888
+
+server:
+  hostname: localhost
+
+info:
+  description: Gateway
+  url: http://${server.hostname}:${server.port}
+
+greetingSvc:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: ${server.hostname}:8091,${server.hostname}:8092
+
+calendarSvc:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: ${server.hostname}:8191
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      uri: http://${server.hostname}:8888
+
+server:
+  hostname: 172.26.132.21
+
+info:
+  description: Gateway
+  url: http://${server.hostname}:${server.port}
+
+greetingSvc:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: ${server.hostname}:8091,${server.hostname}:8092
+calendarSvc:
+  ribbon:
+    eureka:
+      enabled: false
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
+    listOfServers: ${server.hostname}:8191
+---

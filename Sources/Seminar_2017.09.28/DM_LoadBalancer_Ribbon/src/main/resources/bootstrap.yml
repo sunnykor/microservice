@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: loadbalancer-dm
+  cloud:
+    config:
+      uri: http://192.168.56.1:8888
+#      name: loadbalancer-dm
