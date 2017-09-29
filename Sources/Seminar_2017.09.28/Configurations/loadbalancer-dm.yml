@@ -1,0 +1,73 @@
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+  beans: 
+     sensitive: false
+management:
+  security:
+    enabled: false
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 5000
+---
+spring:
+  profiles: local
+#  application:
+#    name: loadbalancer-dm
+
+server:
+  hostname: localhost
+
+info:
+  description: Hello LoadBalancer-Service!
+  url: http://${server.hostname}:${server.port}
+  routingUrl: http://userWeb
+
+userWeb:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+#    listOfServers: localhost:9091,localhost:9092
+    listOfServers: localhost:9091,localhost:9092
+---
+spring:
+  profiles: prod
+#  application:
+#    name: loadbalancer-dm
+
+server:
+  hostname: 172.26.132.21
+#  hostname: 172.19.246.209
+
+info:
+  description: Hello LoadBalancer-Service!
+  url: http://10.0.0.103:${server.port}
+  routingUrl: http://userWeb
+
+userWeb:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+#    listOfServers: ${server.hostname}:9091,${server.hostname}:9092
+    listOfServers: 172.26.132.21:9091,172.26.132.21:9092
+---

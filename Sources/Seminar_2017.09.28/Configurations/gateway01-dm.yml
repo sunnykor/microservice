@@ -1,0 +1,80 @@
+---
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+  beans: 
+     sensitive: false
+management:
+  security:
+    enabled: false
+logging: 
+  level: 
+    ROOT: INFO 
+    org.springframework.web: DEBUG
+zuul:
+  routes:
+    greetingSvc:
+      serviceId: greetingSvc
+
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 5000
+---
+spring:
+  profiles: local
+  application:
+    name: gateway01-dm
+
+server:
+  hostname: localhost
+
+info:
+  description: Hello Gateway-Service!
+  url: http://localhost:${server.port}
+
+greetingSvc:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+    listOfServers: localhost:8091,localhost:8092
+---
+spring:
+  profiles: prod
+  application:
+    name: gateway01-dm
+
+server:
+  hostname: 172.26.132.21
+#  hostname: 172.19.246.209
+
+info:
+  description: Hello Gateway-Service!
+  url: http://localhost:${server.port}
+
+greetingSvc:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+#    listOfServers: 172.26.132.21:8091,172.26.132.21:8092
+    listOfServers: 172.26.132.21:8091,172.26.132.21:8092
+---

@@ -1,0 +1,63 @@
+endpoints: 
+  restart: 
+    enabled: true 
+  shutdown: 
+    enabled: true 
+  health: 
+     sensitive: false
+  beans: 
+     sensitive: false
+management:
+  security:
+    enabled: false
+hystrix:
+  command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
+---
+spring:
+  profiles: local
+  application:
+    name: userWeb-dm
+
+server:
+  hostname: localhost
+
+info:
+  description: Hello UserWeb-Service!
+  url: http://${server.hostname}:${server.port}
+  routingUrl: http://gateway
+
+gateway:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+    listOfServers: localhost:10001,localhost:10002
+---
+spring:
+  profiles: prod
+
+server:
+  hostname: localhost
+
+info:
+  description: Hello UserWeb-Service!
+  url: http://${server.hostname}:${server.port}
+  routingUrl: http://gateway
+
+gateway:
+  ribbon:
+    eureka:
+      enabled: false
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 1
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 10000
+#    ConnectTimeout: 3000
+#    ReadTimeout: 3000
+    listOfServers: localhost:10001,localhost:10002
+---
